@@ -5,7 +5,7 @@ https://mega.nz/#!cQ8XzYzJ!y7M_bhSdLv6fJF8jxymYZqH2s9xl8MEcAgjgYUKZKRc
 
 2.) Client entpacken und installieren
 
-3.) Taskmanager öffnen und bereit halten, weil im Schritt 4 eine Exe gestartet werden muss. Diese muss nach dem Sichern direkt gekillt werden.
+3.) Taskmanager öffnen und bereit halten, weil im Schritt 4 eine Config-Exe gestartet werden muss. Diese muss nach dem Sichern direkt gekillt werden.
 
 3.) TriggerDetect starten, Einstellungen nach beliebigen vornehmen. **!!! TRIGGERDETECT NACH SICHERN DIREKT KILLEN !!!**, weil ansonsten der Client gepatcht wird.
 
