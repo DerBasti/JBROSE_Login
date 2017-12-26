@@ -1,0 +1,14 @@
+0x00 = Maintenance
+0x01 = General Error
+0x02 = Account does not exist
+0x03 = Incorrect password
+0x04 = Account is already logged in
+0x05 = Banned
+0x06 = Allowed Game Time expired
+0x07 = Server down ("Cannot connect to other servers")
+0x08 = Maximum capacity reached
+0x09 = Account not verified
+0x0A = Login failed
+0x0B = IP Capacity full
+0x0C = OK
+Alles danach: Maintenance/Failure
