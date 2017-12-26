@@ -24,5 +24,7 @@ public:
 	void onNewClient(NetworkClient* nc) final;
 	virtual void onNewROSEClient(ROSEClient* roseClient);
 	virtual void onClientDisconnecting(NetworkClient* nc);
+
+	virtual void onROSEClientDisconnecting(ROSEClient* client);
 };
 

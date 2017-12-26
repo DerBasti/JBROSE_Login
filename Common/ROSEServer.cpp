@@ -40,11 +40,15 @@ void ROSEServer::onNewROSEClient(ROSEClient* roseClient) {
 void ROSEServer::onClientDisconnecting(NetworkClient* nc) {
 	ROSEClient* client = findROSEClientByInterface(nc);
 	if (client != nullptr) {
-		//TODO: Remove upon disconnecting
+		onROSEClientDisconnecting(client);
+		clientList.erase(nc);
+		delete client;
 	}
-	clientList.erase(nc);
-	delete client;
 	client = nullptr;
+}
+
+void ROSEServer::onROSEClientDisconnecting(ROSEClient* client) {
+	//TODO
 }
 
 bool ROSEServer::onPacketsReady(ROSEClient* client, std::queue<std::shared_ptr<Packet>>& packetQueue) {

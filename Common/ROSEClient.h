@@ -24,7 +24,7 @@ protected:
 	void resetToDefaultState();
 public:
 	ROSEClient(NetworkClient* networkInterface);
-	~ROSEClient();
+	virtual ~ROSEClient();
 
 	bool handleIncomingDataFragment(const NetworkMessageFragment& data);
 

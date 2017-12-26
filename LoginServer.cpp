@@ -20,6 +20,17 @@ void LoginServer::onNewROSEClient(ROSEClient* roseClient) {
 	clientList.insert(make_pair(roseClient, client));
 }
 
+void LoginServer::onROSEClientDisconnecting(ROSEClient* client) {
+	auto it = clientList.find(client);
+	if (it != clientList.cend()) {
+		LoginClient *loginClient = (*it).second;
+		clientList.erase(it);
+
+		delete loginClient;
+		loginClient = nullptr;
+	}
+}
+
 bool LoginServer::onPacketsReady(ROSEClient* client, std::queue<std::shared_ptr<Packet>>& packetQueue) {
 	LoginClient* loginClient = findLoginClientByROSEClient(client);
 	bool packetsSuccessfullyHandled = true;

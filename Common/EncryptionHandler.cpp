@@ -113,7 +113,7 @@ void CryptTable::generateCryptTables() {
 	uint16_t				entry;
 	unsigned					value;
 	int							ivalue;
-	unsigned ModValue = CRYPTTABLE_START_VALUE_DEFAULT;
+	unsigned ModValue = DEFAULT_CRYPTTABLE_START_VALUE;
 
 	// Allocate memory for structure
 	//tables = (unsigned  **)calloc(16, sizeof(unsigned));
@@ -207,11 +207,11 @@ void LoginCryptTable::generateCryptTables()
 	for (table = 0; table<4; ++table)
 	{
 		ControlStruct.CountTableMod[table] = 0;
-		ControlStruct.ValueTableMod[table] = LOGINSERVER_CRYPTTABLE_START_VALUE;
+		ControlStruct.ValueTableMod[table] = LOGIN_CRYPTTABLE_START_VALUE;
 	}
 
 	// Another startvalue
-	startValue = LOGINSERVER_CRYPTTABLE_START_VALUE;
+	startValue = LOGIN_CRYPTTABLE_START_VALUE;
 
 	// Generate default tables
 	for (table = 0; table<16; ++table)

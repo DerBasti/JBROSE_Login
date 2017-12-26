@@ -1,8 +1,5 @@
 #pragma once
 
-#define LOGINSERVER_CRYPTTABLE_START_VALUE 0x0042D266
-#define CRYPTTABLE_START_VALUE_DEFAULT 0x87654321	
-
 class CryptTable {
 protected:
 	unsigned int** tables;
@@ -12,6 +9,8 @@ protected:
 
 	virtual void freeCryptTables();
 public:
+	const static uint32_t LOGIN_CRYPTTABLE_START_VALUE = 0x0042D266;
+	const static uint32_t DEFAULT_CRYPTTABLE_START_VALUE = 0x87654321;
 	CryptTable() {
 	}
 	virtual ~CryptTable() {

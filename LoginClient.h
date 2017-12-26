@@ -14,7 +14,7 @@ private:
 	bool handleLoginRequest(const Packet* packet);
 public:
 	LoginClient(ROSEClient* networkClient);
-	~LoginClient();
+	virtual ~LoginClient();
 
 	bool handlePacket(const Packet* packet);
 };
