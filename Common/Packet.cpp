@@ -2,8 +2,8 @@
 #include <iostream>
 
 SendablePacket::SendablePacket(const Packet& packet) {
-	unsigned char *buffer = new unsigned char[packet.getLength()+1];
-	memset(buffer, 0x00, packet.getLength()+1);
+	unsigned char *buffer = new unsigned char[0x400];
+	memset(buffer, 0x00, packet.getLength());
 	sharedBuffer = std::shared_ptr<unsigned char>(buffer, std::default_delete<unsigned char[]>());
 }
 
@@ -27,9 +27,10 @@ Packet::~Packet()
 {
 }
 
-std::shared_ptr<unsigned char> ResponsePacket::toSendable() const {
+SendablePacket ResponsePacket::toSendable() const {
 	SendablePacket packet(*this);
 	appendHeaderToSendable(packet);
 	appendContentToSendable(packet);
-	return packet.toSendable();
+	packet.updatePacketSize();
+	return packet;
 }

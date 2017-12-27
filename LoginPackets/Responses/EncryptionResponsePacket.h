@@ -5,7 +5,7 @@ class EncryptionResponsePacket : public ResponsePacket {
 private:
 	uint8_t actionId;
 	uint32_t additionalStep;
-
+	const static uint16_t DEFAULT_MINIMUM_SIZE = 11;
 protected:
 	__inline virtual uint16_t getDefaultLength() const {
 		return EncryptionResponsePacket::DEFAULT_MINIMUM_SIZE;

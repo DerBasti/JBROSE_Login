@@ -1,6 +1,6 @@
 #include "EncryptionResponsePacket.h"
 
-EncryptionResponsePacket::EncryptionResponsePacket() : ResponsePacket(0x7FF, 11) {
+EncryptionResponsePacket::EncryptionResponsePacket() : ResponsePacket(0x7FF, DEFAULT_MINIMUM_SIZE) {
 	actionId = 0x02;
 }
 

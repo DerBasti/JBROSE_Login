@@ -44,6 +44,7 @@ bool LoginClient::handleServerRequest(const Packet* packet) {
 	ServerListResponsePacket serverListPacket;
 
 	serverListPacket.setRequestedServerId(requestPacket->getRequestedServerId());
+	serverListPacket.setChannelAmount(0x01);
 	serverListPacket.setChannelId(0x01);
 	serverListPacket.setChannelStatus(0x00);
 	serverListPacket.setChannelName("Testchannel");
@@ -59,7 +60,7 @@ bool LoginClient::handleLoginRequest(const Packet* packet) {
 	loginPacket.setServerNumber('1');
 	loginPacket.setServerName("Test Server");
 	loginPacket.setLoginResponse(UserLoginResponsePacket::LoginResponse::OKAY);
-	loginPacket.setChannelId(0x01);
+	loginPacket.setServerId(0x01);
 
 	return getWrappedNetworkInterface()->sendData(loginPacket);
 }

@@ -6,6 +6,9 @@
 
 class ROSEClient
 {
+private:
+
+	void onEncryptionOfPacket(const std::string& packetToPrintable, const SendablePacket& packet) const;
 protected:
 	const static uint16_t DEFAULT_HEADERSIZE = 6;
 	std::queue<std::shared_ptr<Packet>> packetQueue;
@@ -33,7 +36,7 @@ public:
 	}
 
 	std::queue<std::shared_ptr<Packet>> getQueuedPackets();
-	bool sendData(const ResponsePacket& packet);
+	bool sendData(const ResponsePacket& packet) const;
 
 	__inline bool isPacketQueueFilled() {
 		std::lock_guard<std::mutex> mutexLock(packetQueueMutex);

@@ -4,11 +4,13 @@
 class UserLoginResponsePacket : public ResponsePacket {
 private:
 	const static uint16_t DEFAULT_SIZE_WITH_EMPTY_STRING = 17;
-	uint16_t unknown;
-	uint16_t loginResponseId;
+	uint8_t loginResponseId;
+	uint16_t unknown1;
+	uint16_t unknown2;
+	uint8_t unknown3;
 	uint8_t serverNumberAsCharacter;
 	std::shared_ptr<char> serverName;
-	uint32_t channelId;
+	uint32_t serverId;
 protected:
 	virtual void appendContentToSendable(SendablePacket& sendable) const;
 
@@ -17,7 +19,7 @@ protected:
 	}
 public:
 	enum LoginResponse : uint8_t {
-		MAINTENANCE,
+		OKAY,
 		GENERAL_ERROR,
 		ACCOUNT_DOES_NOT_EXIST,
 		INCORRECT_PASSWORD,
@@ -29,7 +31,6 @@ public:
 		LOGIN_FAILED,
 		IP_CAPACITY_FULL,
 		LOGIN_FAILED_OTHER,
-		OKAY
 	};
 
 	UserLoginResponsePacket();
@@ -37,15 +38,16 @@ public:
 	virtual std::string toPrintable() const;
 
 	__inline void setLoginResponse(const LoginResponse& response) {
-		loginResponseId = (uint16_t)response;
+		loginResponseId = (uint8_t)response;
 	}
+
 	__inline void setServerNumber(const uint8_t numberAsCharacter) {
 		serverNumberAsCharacter = numberAsCharacter;
 	}
 
 	void setServerName(const char *name);
 
-	__inline void setChannelId(const uint32_t channel) {
-		channelId = channel;
+	__inline void setServerId(const uint32_t channel) {
+		serverId = channel;
 	}
 };

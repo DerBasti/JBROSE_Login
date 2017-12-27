@@ -5,8 +5,10 @@ class ServerListResponsePacket : public ResponsePacket {
 private:
 	const static uint16_t DEFAULT_SIZE_WITH_EMPTY_STRING = 16;
 	uint32_t requestedServerId;
-	uint16_t channelId;
-	uint8_t unknown;
+	uint8_t channelAmount;
+	uint8_t channelId;
+	uint8_t unknown1;
+	uint8_t unknown2;
 	uint16_t channelStatus;
 	std::shared_ptr<char> channelName;
 
@@ -29,8 +31,10 @@ public:
 	__inline void setRequestedServerId(const uint32_t serverId) {
 		requestedServerId = serverId;
 	}
-
-	__inline void setChannelId(const uint16_t channel) {
+	__inline void setChannelAmount(const uint8_t amountOfChannels) {
+		channelAmount = amountOfChannels;
+	}
+	__inline void setChannelId(const uint8_t channel) {
 		channelId = channel;
 	}
 

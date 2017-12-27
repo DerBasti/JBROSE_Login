@@ -27,6 +27,9 @@ void NetworkClient::setIp(const sockaddr_in* addr) {
 NetworkMessageFragment NetworkClient::receiveData() {
 	NetworkMessageFragment dataHolder;
 	lastAmountOfBytesReceived = ::recv(this->getSocket(), dataHolder, getMaxAllowedBytesToReceive(), 0x00);
+	if (static_cast<int16_t>(lastAmountOfBytesReceived) == -1) {
+		lastAmountOfBytesReceived = 0;
+	}
 	dataHolder.setLength(lastAmountOfBytesReceived);
 	return dataHolder;
 }

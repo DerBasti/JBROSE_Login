@@ -43,7 +43,17 @@ public:
 		unsigned short stringLength = str != nullptr ? static_cast<unsigned short>(strlen(str)) : 0;
 		memcpy(&buffer[caret], str, stringLength);
 		caret += stringLength;
+
 		addData<uint8_t>(0x00); //Null-Terminator
+	}
+
+	__inline void updatePacketSize() const {
+		uint16_t* packet = (uint16_t*)sharedBuffer.get();
+		*packet = caret;
+	}
+
+	__inline uint16_t getCurrentSize() const {
+		return caret;
 	}
 
 	std::shared_ptr<unsigned char> toSendable() const {
@@ -65,6 +75,13 @@ protected:
 	}
 	__inline void setLength(uint16_t newLength) {
 		length = newLength;
+	}
+	void onNewString(const char *oldStr, const char *newStr) {
+		size_t oldLen = oldStr != nullptr ? strlen(oldStr)+1 : 0;
+		size_t newLen = newStr != nullptr ? strlen(newStr)+1 : 0;
+
+		int16_t differenceToPreviousState = static_cast<int16_t>(oldLen - newLen);
+		setLength(static_cast<uint16_t>(length - differenceToPreviousState));
 	}
 public:
 	const static uint16_t DEFAULT_MINIMUM_SIZE = 6;
@@ -95,22 +112,17 @@ public:
 
 class ResponsePacket : public Packet {
 protected:
-	const static uint16_t DEFAULT_RESPONSE_SIZE = 0x06;
 	void appendHeaderToSendable(SendablePacket& sendable) const {
-		sendable.addData(getLength());
+		sendable.addData<uint16_t>(getLength()); //Length
 		sendable.addData(getCommandId());
 		sendable.addData<uint16_t>(0x00);
 	}
 	virtual void appendContentToSendable(SendablePacket& sendable) const {
 
 	}
-
-	__inline void setLength(uint16_t newLength) {
-		Packet::setLength(newLength);
-	}
 public:
 	ResponsePacket(const uint16_t commandId, const uint16_t len) : Packet(commandId, len) {
 
 	}
-	std::shared_ptr<uint8_t> toSendable() const;
+	SendablePacket toSendable() const;
 };
