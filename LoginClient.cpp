@@ -1,5 +1,6 @@
 #include <iostream>
 #include "LoginClient.h"
+#include "Common\EncryptionHandler.h"
 #include "Common\ROSEMessageHandler.h"
 #include "LoginPackets\RequestPackets.h"
 #include "LoginPackets\ResponsePackets.h"
@@ -17,12 +18,14 @@ LoginClient::~LoginClient()
 
 bool LoginClient::handlePacket(const Packet* packet) {
 	switch (packet->getCommandId()) {
-	case 0x703:
-		return handleEncryptionRequest(packet);
-	case 0x704:
-		return handleServerRequest(packet);
-	case 0x708:
-		return handleLoginRequest(packet);
+		case 0x703:
+			return handleEncryptionRequest(packet);
+		case 0x704:
+			return handleServerListRequest(packet);
+		case 0x708:
+			return handleLoginRequest(packet);
+		case 0x70A:
+			return handleConnectToCharServer(packet);
 	}
 	std::cout << "Expected to handle 0x" << std::hex << packet->getCommandId() << std::dec << " with length: " << packet->getLength() << "\n";
 	return false;
@@ -39,7 +42,7 @@ bool LoginClient::handleEncryptionRequest(const Packet* packet) {
 	return this->getWrappedNetworkInterface()->sendData(encryptionPacket);
 }
 
-bool LoginClient::handleServerRequest(const Packet* packet) {
+bool LoginClient::handleServerListRequest(const Packet* packet) {
 	const ServerListRequestPacket* requestPacket = dynamic_cast<const ServerListRequestPacket*>(packet);
 	ServerListResponsePacket serverListPacket;
 
@@ -63,4 +66,17 @@ bool LoginClient::handleLoginRequest(const Packet* packet) {
 	loginPacket.setServerId(0x01);
 
 	return getWrappedNetworkInterface()->sendData(loginPacket);
+}
+
+bool LoginClient::handleConnectToCharServer(const Packet* packet) {
+	const ChannelServerRequestPacket* requetsPacket = dynamic_cast<const ChannelServerRequestPacket*>(packet);
+	ChannelServerResponsePacket response;
+
+	response.setChannelIp("127.0.0.1");
+	response.setChannelStatus(0x00);
+	response.setEncryptionValue(CryptTable::DEFAULT_CRYPTTABLE_START_VALUE);
+	response.setPort(29100);
+	response.setUserAccountId(0x01);
+	
+	return getWrappedNetworkInterface()->sendData(response);
 }

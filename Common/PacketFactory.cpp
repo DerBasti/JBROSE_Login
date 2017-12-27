@@ -33,4 +33,5 @@ void PacketFactory::init() {
 	ADD_PACKET_TO_HANDLE(0x703, EncryptionRequestPacket);
 	ADD_PACKET_TO_HANDLE(0x704, ServerListRequestPacket);
 	ADD_PACKET_TO_HANDLE(0x708, UserLoginRequestPacket);
+	ADD_PACKET_TO_HANDLE(0x70A, ChannelServerRequestPacket);
 }
