@@ -1,5 +1,5 @@
 #pragma once
-#include "Common\ROSEServer.h"
+#include "..\JBROSE_Common\ROSEServer.h"
 #include "LoginClient.h"
 class LoginServer : public ROSEServer
 {

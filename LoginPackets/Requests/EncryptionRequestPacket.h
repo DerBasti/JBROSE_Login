@@ -1,5 +1,5 @@
 #pragma once
-#include "..\..\Common\Packet.h"
+#include "..\..\..\JBROSE_Common\Packet.h"
 
 class EncryptionRequestPacket : public Packet {
 public:

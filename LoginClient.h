@@ -1,5 +1,5 @@
 #pragma once
-#include "Common\ROSEClient.h"
+#include "..\JBROSE_Common\ROSEClient.h"
 
 class LoginClient
 {

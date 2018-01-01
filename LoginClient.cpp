@@ -1,7 +1,7 @@
 #include <iostream>
 #include "LoginClient.h"
-#include "Common\EncryptionHandler.h"
-#include "Common\ROSEMessageHandler.h"
+#include "..\JBROSE_Common\EncryptionHandler.h"
+#include "..\JBROSE_Common\ROSEMessageHandler.h"
 #include "LoginPackets\RequestPackets.h"
 #include "LoginPackets\ResponsePackets.h"
 

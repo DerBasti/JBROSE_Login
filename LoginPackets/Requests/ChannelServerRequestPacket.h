@@ -1,12 +1,12 @@
 #pragma once
 
-#include "..\..\Common\Packet.h"
+#include "..\..\..\JBROSE_Common\Packet.h"
 
 class ChannelServerRequestPacket : public Packet {
 private:
 	uint32_t serverId;
 	uint8_t channelId;
-public:
+public: 
 	ChannelServerRequestPacket(const Packet* packet);
 	virtual ~ChannelServerRequestPacket();
 
