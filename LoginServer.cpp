@@ -1,8 +1,10 @@
 #include "LoginServer.h"
-
+#include "LoginPackets\LoginPacketFactory.h"
 
 LoginServer::LoginServer(uint16_t port) : ROSEServer(port) {
 	loadEncryption();
+	packetFactory = std::shared_ptr<PacketFactory>(new LoginPacketFactory());
+	packetFactory->init();
 }
 
 
