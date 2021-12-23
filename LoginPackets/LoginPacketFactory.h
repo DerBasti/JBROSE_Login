@@ -7,5 +7,4 @@ public:
 	LoginPacketFactory();
 	virtual ~LoginPacketFactory();
 
-	virtual void init();
 };

@@ -3,8 +3,9 @@
 
 LoginServer::LoginServer(uint16_t port) : ROSEServer(port) {
 	loadEncryption();
-	packetFactory = std::shared_ptr<PacketFactory>(new LoginPacketFactory());
-	packetFactory->init();
+	setPacketFactoryCreatorFunction([]() {
+		return std::shared_ptr<PacketFactory>(new LoginPacketFactory());
+	});
 }
 
 
@@ -17,12 +18,12 @@ void LoginServer::loadEncryption() {
 	ENCRYPTION_TABLE->generateCryptTables();
 }
 
-void LoginServer::onNewROSEClient(ROSEClient* roseClient) {
+void LoginServer::onNewROSEClient(std::shared_ptr<ROSEClient>& roseClient) {
 	LoginClient* client = new LoginClient(roseClient);
 	clientList.insert(make_pair(roseClient, client));
 }
 
-void LoginServer::onROSEClientDisconnecting(ROSEClient* client) {
+void LoginServer::onROSEClientDisconnecting(std::shared_ptr<ROSEClient>& client) {
 	auto it = clientList.find(client);
 	if (it != clientList.cend()) {
 		LoginClient *loginClient = (*it).second;
@@ -33,7 +34,7 @@ void LoginServer::onROSEClientDisconnecting(ROSEClient* client) {
 	}
 }
 
-bool LoginServer::onPacketsReady(ROSEClient* client, std::queue<std::shared_ptr<Packet>>& packetQueue) {
+bool LoginServer::onPacketsReady(std::shared_ptr<ROSEClient>& client, std::queue<std::shared_ptr<Packet>>& packetQueue) {
 	LoginClient* loginClient = findLoginClientByROSEClient(client);
 	bool packetsSuccessfullyHandled = true;
 	if (loginClient != nullptr) {
@@ -46,7 +47,7 @@ bool LoginServer::onPacketsReady(ROSEClient* client, std::queue<std::shared_ptr<
 	return loginClient != nullptr && packetsSuccessfullyHandled;
 }
 
-LoginClient* LoginServer::findLoginClientByROSEClient(ROSEClient* parent) {
+LoginClient* LoginServer::findLoginClientByROSEClient(std::shared_ptr<ROSEClient>& parent) {
 	LoginClient *result = nullptr;
 	auto it = clientList.find(parent);
 	if (it != clientList.cend()) {

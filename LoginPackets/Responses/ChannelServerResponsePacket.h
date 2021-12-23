@@ -21,8 +21,14 @@ public:
 
 	virtual std::string toPrintable() const;
 
+	__inline uint8_t getChannelStatus() const {
+		return channelStatus;
+	}
 	__inline void setChannelStatus(const uint8_t status) {
 		channelStatus = status;
+	}
+	__inline uint32_t getUserAccountId() const {
+		return userAccountId;
 	}
 	__inline void setUserAccountId(const uint32_t accId) {
 		userAccountId = accId;
@@ -30,11 +36,17 @@ public:
 	__inline void setEncryptionValue(const uint32_t encryption) {
 		encryptionValue = encryption;
 	}
+	__inline std::shared_ptr<char> getChannelIp() const {
+		return channelIpAsString;
+	}
 	__inline void setChannelIp(const char* ip) {
 		channelIpAsString = std::shared_ptr<char>(new char[0x10], std::default_delete<char[]>());
 		size_t length = strlen(ip);
 		memcpy(channelIpAsString.get(), ip, length);
 		channelIpAsString.get()[length] = 0x00;
+	}
+	__inline uint16_t getPort() const {
+		return port;
 	}
 	__inline void setPort(const uint16_t port) {
 		this->port = port;

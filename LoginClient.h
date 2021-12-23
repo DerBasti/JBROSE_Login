@@ -4,9 +4,10 @@
 class LoginClient
 {
 private:
-	ROSEClient* networkClient;
+	std::shared_ptr<ROSEClient> networkClient;
+	ROSELogger logger;
 
-	__inline ROSEClient* getWrappedNetworkInterface() const {
+	__inline std::shared_ptr<ROSEClient> getWrappedNetworkInterface() const {
 		return networkClient;
 	}
 	bool handleEncryptionRequest(const Packet* packet);
@@ -14,7 +15,7 @@ private:
 	bool handleLoginRequest(const Packet* packet);
 	bool handleConnectToCharServer(const Packet* packet);
 public:
-	LoginClient(ROSEClient* networkClient);
+	LoginClient(std::shared_ptr<ROSEClient>& networkClient);
 	virtual ~LoginClient();
 
 	bool handlePacket(const Packet* packet);

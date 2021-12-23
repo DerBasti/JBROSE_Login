@@ -6,14 +6,13 @@
 #include "LoginPackets\ResponsePackets.h"
 
 
-LoginClient::LoginClient(ROSEClient* networkClient) {
+LoginClient::LoginClient(std::shared_ptr<ROSEClient>& networkClient) {
 	this->networkClient = networkClient;
 }
 
 
 LoginClient::~LoginClient()
 {
-	networkClient = nullptr;
 }
 
 bool LoginClient::handlePacket(const Packet* packet) {
@@ -27,7 +26,7 @@ bool LoginClient::handlePacket(const Packet* packet) {
 		case 0x70A:
 			return handleConnectToCharServer(packet);
 	}
-	std::cout << "Expected to handle 0x" << std::hex << packet->getCommandId() << std::dec << " with length: " << packet->getLength() << "\n";
+	logger.logDebug("Expected to handle 0x", packet->getCommandIdAsHex().get(), " with length: ", packet->getLength());
 	return false;
 }
 
@@ -77,6 +76,8 @@ bool LoginClient::handleConnectToCharServer(const Packet* packet) {
 	response.setEncryptionValue(CryptTable::DEFAULT_CRYPTTABLE_START_VALUE);
 	response.setPort(29100);
 	response.setUserAccountId(0x01);
+
+	logger.logTrace(response.toPrintable().c_str());
 	
 	return getWrappedNetworkInterface()->sendData(response);
 }
