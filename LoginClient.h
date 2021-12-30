@@ -5,7 +5,7 @@ class LoginClient
 {
 private:
 	std::shared_ptr<ROSEClient> networkClient;
-	ROSELogger logger;
+	ROSEThreadedLogger logger;
 
 	__inline std::shared_ptr<ROSEClient> getWrappedNetworkInterface() const {
 		return networkClient;
